@@ -1,4 +1,13 @@
 <?php
+// Initialize the session
+session_start();
+ 
+// If session variable is not set it will redirect to login page
+if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
+	header("location: login.php");
+	exit;
+}
+
 // Include config file
 require_once 'config.php';
  
@@ -105,9 +114,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		</style>
 	</head>
 	<body>
+		<div class="page-header">
+			<h1>Hi, <b><?php echo $_SESSION['username']; ?></b>. Welcome to your dashboard.</h1>
+			<p>if we put another form here that posts to the "runs" table, and have the username automatically get posted too, we can have all users submitted runs in one table. then we can display only the ones approrpiate for the logged in user</p>
+		</div>
+
 		<div class="wrapper">
-			<h2>Sign Up</h2>
-			<p>Please fill this form to create an account.</p>
+			<h2>Sign Up. THIS FORM WORKS HERE.</h2>
+			<p>need to update this form to submit runs instead</p>
 			<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 				<div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
 					<label>Username:<sup>*</sup></label>
@@ -131,5 +145,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				<p>Already have an account? <a href="login.php">Login here</a>.</p>
 			</form>
 		</div>    
+
+		<p><a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a></p>
 	</body>
 </html>
+
