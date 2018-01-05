@@ -11,17 +11,43 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 // Include config file
 require_once 'config.php';
 
-// echo "<table>"; // start a table tag in the HTML
+$current_username =  $_SESSION['username'];
 
-// while($row = mysql_fetch_array($result)){   //Creates a loop to loop through results
-// echo "<tr><td>" . $row['run_username'] . "</td><td>" . $row['distance'] . "</td><td>" . $row['run_time'] . "</td></tr>";  //$row['index'] the index here is a field name
-// }
+$sql = "SELECT * FROM runs WHERE run_username = '$current_username'";
+$result = mysqli_query($link, $sql);
+$run_data = "";
+$pace = "";
 
-// echo "</table>"; //Close the table in HTML
+if (mysqli_num_rows($result) > 0) {
+	$run_data .= "<table>";
+		$run_data .= "<tbody>";
+			
+		// output data of each row
+		while($row = mysqli_fetch_assoc($result)) {
+			// $pace = $row["run_time"] / $row["distance"];
+			// $pace = TIME_TO_SEC($row["run_time"]);
+			// $pace = strtotime( $row["run_time"] );
+			// $pace = date( 'Y-m-d H:i:s', $row["run_time"] );
+			$pace = "WORKING ON THIS";
+			$run_data .= "<tr>";
+				// $run_data .= "<td>Username: " . $row["run_username"]. "</td>";
+				$run_data .= "<td>Distance: " . $row["distance"] . "</td>";
+				$run_data .= "<td>Time: " . $row["run_time"] . "</td>";
+				$run_data .= "<td>Pace: " . $pace . "</td>";
+			$run_data .= "</tr>";
+		}
 
-// mysql_close(); //Make sure to close out the database connection
+		$run_data .= "</tbody>";
+	$run_data .= "</table>";
+
+} else {
+	echo "0 results, time to start running";
+}
+
+mysqli_close($conn);
+
 ?>
- <!-- 
+ 
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -30,14 +56,22 @@ require_once 'config.php';
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
 		<style type="text/css">
 			body{ font: 14px sans-serif; text-align: center; }
+			td {
+				border: 1px solid #000;
+				padding: 10px;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="page-header">
-			<h1>Hi, <b><?php // echo $_SESSION['username']; ?></b>. this is the front end of the site</h1>
-			<p>data will be displayed here</p>
+			<h1>Hi, <b><?php echo $_SESSION['username']; ?></b>. this is the front end of the site</h1>
+			<p>here is all your run data:</p>
+			<?php echo $run_data ?>
 		</div>
+		<p><a href="dashboard.php" class="btn btn-success">Add a Run</a></p>
 		<p><a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a></p>
 	</body>
 </html>
- -->
+
+
+

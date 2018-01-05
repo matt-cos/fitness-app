@@ -15,7 +15,7 @@ require_once 'config.php';
 $distance = $run_time = "";
 $distance_err = $run_time_err = "";
 
-$get_username =  $_SESSION['username'];
+$get_current_username =  $_SESSION['username'];
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -42,7 +42,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 		
 		// Prepare an insert statement
-		$sql = "INSERT INTO runs (run_username, distance, run_time) VALUES ('$get_username', '$distance', '$run_time')";
+		$sql = "INSERT INTO runs (run_username, distance, run_time) VALUES ('$get_current_username', '$distance', '$run_time')";
 		 
 		// if($stmt = mysqli_prepare($link, $sql)){
 		// 	// Bind variables to the prepared statement as parameters
@@ -62,7 +62,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		// }
 
 		if (mysqli_query($link, $sql)) {
-			echo "New record created successfully";
+			echo "New record created successfully.";
 		} else {
 			echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 		}
@@ -90,13 +90,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	</head>
 	<body>
 		<div class="page-header">
-			<h1>Hi, <b><?php echo $_SESSION['username']; ?>, <?php echo $get_username; ?></b>. Welcome to your dashboard.</h1>
-			<p>form should post user ID, distance and pace to runs table</p>
+			<h1>Hi, <b><?php echo $get_current_username; ?></b>. Welcome to your dashboard.</h1>
 		</div>
 
 		<div class="wrapper">
-			<h2>Sign Up. THIS FORM WORKS HERE.</h2>
-			<p>need to update this form to submit runs instead</p>
+			<h2>Add a run</h2>
 			<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 				<div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
 					<label>Distance:<sup>*</sup></label>
@@ -115,6 +113,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			</form>
 		</div>    
 
+		<p><a href="./" class="btn btn-primary">View Your Progress</a></p>
 		<p><a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a></p>
 	</body>
 </html>
