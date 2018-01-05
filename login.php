@@ -45,6 +45,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 					// Bind result variables
 					mysqli_stmt_bind_result($stmt, $username, $hashed_password);
 					if(mysqli_stmt_fetch($stmt)){
+
+						// where is password_verify function?
+						// where is password_verify function?
+						// where is password_verify function?
+						// where is password_verify function?
+						// where is password_verify function?
+						// where is password_verify function?
 						if(password_verify($password, $hashed_password)){
 							/* Password is correct, so start a new session and
 							save the username to the session */
