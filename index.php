@@ -41,7 +41,7 @@ if (mysqli_num_rows($result) > 0) {
 	$run_data .= "</table>";
 
 } else {
-	echo "0 results, time to start running";
+	$run_data = "0 results, time to start running!";
 }
 
 mysqli_close($conn);
