@@ -91,6 +91,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	<body>
 		<div class="page-header">
 			<h1>Hi, <b><?php echo $get_current_username; ?></b>. Welcome to your dashboard.</h1>
+			<h2>
+				TODO:
+				remove config.php from git
+				remove enclosing folder
+			</h2>
 		</div>
 
 		<div class="wrapper">
