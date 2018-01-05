@@ -10,21 +10,21 @@ $username_err = $password_err = "";
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
 	// Check if username is empty
-	if(!trim($_POST["username"])){
+	if(!(trim($_POST["username"]))){
 		$username_err = 'Please enter username.';
 	} else{
 		$username = trim($_POST["username"]);
 	}
 	
 	// Check if password is empty
-	if(empty(trim($_POST['password']))){
+	if(!(trim($_POST['password']))){
 		$password_err = 'Please enter your password.';
 	} else{
 		$password = trim($_POST['password']);
 	}
 	
 	// Validate credentials
-	if(empty($username_err) && empty($password_err)){
+	if(!($username_err) && !($password_err)){
 		// Prepare a select statement
 		$sql = "SELECT username, password FROM users WHERE username = ?";
 		
@@ -49,7 +49,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 							/* Password is correct, so start a new session and
 							save the username to the session */
 							session_start();
-							$_SESSION['username'] = $username;      
+							$_SESSION['username'] = $username;
 							header("location: dashboard.php");
 						} else{
 							// Display an error message if password is not valid
